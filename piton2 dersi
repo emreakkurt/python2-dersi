@@ -1,0 +1,55 @@
+#Bir işletme için personel ekleme personel çıkarma ve
+#personel devir hızını hesaplayan uygulamayı
+#gerçekleştiriniz.
+#Personel devir Hızı:işe alınan personel sayısı/işten çıkarılan personel*100  
+
+from PyQt5.Qtwidgets import*
+from PyQt5.QtCore import*
+
+
+class perDevUyg(QDialog):
+    def __init__(self,parent=none):
+        super(perDevUyg,self).__init__(parent)
+        grid=QGridLayout()
+        self.eklenen=[]
+        self.cikanlar=[]
+        #birinci satır
+        grid.addWidget(QLabel("personel ekleme:"),0,0)
+        self.perEkle=QLineEdit()
+        gird.addWidget(self.perkEkle,0,1)
+        eklebuton=QPushButton("Personel ekle")
+        #ikinci satır
+        grid.addWidget(QLabel("personel çıkarma"),1,0)
+        self.perCik=QLineEdit()
+        grid.addWidget(self.perCik,1,)
+        cikarbuton=QPushButton("personel çıkar")
+        grid.addWidget(cikarbuttuon,1,2)
+        cikarbuton.clicked.connect(self.personelCikar)
+
+        #üçüncü satır
+
+        grid.addWidget(QLabel("personel devir hızı:"),2,0)
+        self.sonuc=QLabel("")
+        grid.addWidget(self.sonuc,2,1)
+        hesaplabuton=QPushButton("Hesapla")
+        grid.addWidget(hesaplabuton,2,2)
+        hesaplabuton.clicked.connect(self.hesapla)
+        self.setLayout(grid)
+        self.setWindowsTitle("oersınek Devir hızı Uygulaması")
+
+
+        def personelEkle(self):
+            self.eklenen.append(self.perEkle.text())
+            self.perEkle.setText("")
+
+        def personelCikar(self):
+            self.cikanlar.append(self.percik.text())
+            self.percik.setText("")
+
+        def hesapla(self):
+            perDevHiz=len(self.cikanlar)/len(self.eklenen)*100
+            self.sonuc.setText(str(perDevHiz))
+uyg=QApplication([])
+pencere=perDevUyg()
+pencere.show()
+uyg.exec()
