@@ -1,0 +1,38 @@
+#import mysql.connector
+from PyQt5.QtWidgets import*
+from PyQt5.QtCore import*
+
+
+class musteriEkleme(QDialog):
+    def __init__(self,ebeveyn=None):
+        super(musteriEkleme,self).__init__(ebeveyn)
+        grid=QGridLayout()
+        grid.addWidget(QLabel("Müşteri Adı:"),0,0)
+        grid.addWidget(QLabel("Müşteri Soyadı:"),1,0)
+        grid.addWidget(QLabel("Müşteri Harcama Miktarı:"),2,0)
+        self.adi=QLineEdit()
+        self.soyadi=QLineEdit()
+        self.miktar=QLineEdit()
+        grid.addWidget(self.adi,0,1)
+        grid.addWidget(self.soyadi,1,1)
+        grid.addWidget(self.miktar,2,1)
+        ekle=QPushButton("Ekle")
+        ekle.clicked.connect(self.musEkle)
+        grid.addWidget(ekle,3,1)
+        self.setLayout(grid)
+        self.setWindowTitle("Müşteri Ekleme Iygulaması")
+    def musEkle(self):
+        adi=self.adi.text()
+        soyadi=self.soyadi.text()
+        miktar=self.miktar.text()
+        baglanti=mysql.connector.connect(user="root",password="",host="127.0.0.1",database="sirket")
+        isaretci=baglanti.cursor()
+        isaretci.execute('INSERT INTO musteriler(adi,soyadi,miktar) VALUES ("%s","%s","%s")'%(adi,soyadi,miktar))
+        isaretci.close()
+        baglanti.close()
+    
+uyg=QApplication([])
+pencere=musteriEkleme()
+pencere.show()
+uyg.exec_
+                         
